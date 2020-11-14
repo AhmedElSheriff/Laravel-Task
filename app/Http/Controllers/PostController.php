@@ -28,4 +28,10 @@ class PostController extends Controller
 
       return redirect('/profile/' . auth()->user()->id);
     }
+
+    public function destroy(\App\Models\Post $post){
+      $post->delete();
+
+      return redirect('/admin/posts');
+    }
 }

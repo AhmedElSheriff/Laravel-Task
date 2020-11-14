@@ -31,21 +31,29 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['middleware' => ['role:manager']], function () {
   Route::get('/admin', [App\Http\Controllers\AdminControllers\AdminController::class, 'index']);
   Route::get('/admin/users', [App\Http\Controllers\AdminControllers\AdminController::class, 'users']);
+  Route::post('/admin/users/create', [App\Http\Controllers\AdminControllers\UserController::class, 'store']);
+
   Route::get('/admin/roles', [App\Http\Controllers\AdminControllers\AdminController::class, 'roles']);
   Route::get('/admin/permissions', [App\Http\Controllers\AdminControllers\AdminController::class, 'permissions']);
+  Route::get('/admin/users/add', [App\Http\Controllers\AdminControllers\AdminController::class, 'createUser']);
   Route::get('/admin/roles/add', [App\Http\Controllers\AdminControllers\AdminController::class, 'createRole']);
   Route::get('/admin/permissions/add', [App\Http\Controllers\AdminControllers\AdminController::class, 'createPermission']);
   Route::get('/admin/roles/{role}/edit', [App\Http\Controllers\AdminControllers\AdminController::class, 'editRole']);
   Route::get('/admin/users/{user}/edit', [App\Http\Controllers\AdminControllers\AdminController::class, 'editUser']);
   Route::patch('/admin/roles/{role}', [App\Http\Controllers\AdminControllers\RoleController::class, 'update']);
+  Route::delete('/admin/users/{user}', [App\Http\Controllers\AdminControllers\UserController::class, 'destroy']);
   Route::patch('/admin/users/{user}', [App\Http\Controllers\AdminControllers\UserController::class, 'update']);
   Route::post('/admin/role/create', [App\Http\Controllers\AdminControllers\RoleController::class, 'store']);
   Route::post('/admin/permission/create', [App\Http\Controllers\AdminControllers\PermissionController::class, 'store']);
+
   Route::get('/admin/posts', [App\Http\Controllers\AdminControllers\AdminController::class, 'posts']);
-  Route::get('/admin/post/{post}/approve', [App\Http\Controllers\AdminControllers\AdminController::class, 'approvePost']);
-  Route::delete('/admin/role/{role}', [App\Http\Controllers\AdminControllers\RoleController::class, 'destroy']);
+  Route::get('/admin/posts/{post}/approve', [App\Http\Controllers\AdminControllers\AdminController::class, 'approvePost']);
+  Route::delete('/admin/roles/{role}', [App\Http\Controllers\AdminControllers\RoleController::class, 'destroy']);
+  Route::delete('/admin/posts/{post}', [App\Http\Controllers\PostController::class, 'destroy']);
 
 });
+
+
 
 
 
@@ -55,9 +63,6 @@ Route::patch('/profile/{user}', [App\Http\Controllers\ProfileController::class, 
 
 Route::group(['middleware' => ['can:add posts']], function () {
   Route::get('/post/create', [App\Http\Controllers\PostController::class, 'create']);
+  Route::post('/post', [App\Http\Controllers\PostController::class, 'store']);
 
 });
-
-
-
-Route::post('/post', [App\Http\Controllers\PostController::class, 'store']);

@@ -8,6 +8,11 @@ document.getElementById("admin-users-tab").classList.add('active');
 <section class="content">
   <div class="container-fluid">
 
+    <div class="d-flex justify-content-center pb-4 pt-4">
+      <a href="/admin/users/add" type="button" class="btn btn-primary">Add User</a>
+    </div>
+
+
     <table id="users_table" class="table table-bordered table-hover">
       <thead>
         <tr>
@@ -27,10 +32,16 @@ document.getElementById("admin-users-tab").classList.add('active');
 
 
           <td>
-            <div class="justify-content-between">
+            <div class="d-flex">
             <button type="button" class="btn btn-primary" style="display:none;">View</button>
-            <a href="/admin/users/{{$user->id}}/edit" type="button" class="btn btn-secondary">Edit</a>
-            <a href="#" class="btn btn-danger">Delete</a>
+            <a href="/admin/users/{{$user->id}}/edit" type="button" class="btn btn-secondary mr-1">Edit</a>
+            <form action="/admin/users/{{$user->id}}" method="post">
+              @csrf
+              @method('DELETE')
+
+              <button href="" onclick="return confirm('Are you sure?')" class="btn btn-danger mr-1">Delete</button>
+            </form>
+
 
             </div>
           </td>

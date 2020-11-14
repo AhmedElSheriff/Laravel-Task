@@ -27,10 +27,16 @@ document.getElementById("admin-roles-tab").classList.add('active');
           <td>{{$role->id}}</td>
           <td>{{$role->name}}</td>
           <td>
-            <div class="justify-content-between">
+            <div class="d-flex">
             <button type="button" class="btn btn-primary" style="display:none;">View</button>
-            <a href="/admin/roles/{{$role->id}}/edit" type="button" class="btn btn-secondary">Edit</a>
-            <a href="#" class="btn btn-danger">Delete</a>
+            <a href="/admin/roles/{{$role->id}}/edit" type="button" class="btn btn-secondary mr-1">Edit</a>
+            <form action="/admin/roles/{{$role->id}}" method="post">
+              @csrf
+              @method('DELETE')
+
+              <button href="" onclick="return confirm('Are you sure?')" class="btn btn-danger mr-1">Delete</button>
+            </form>
+
 
             </div>
           </td>

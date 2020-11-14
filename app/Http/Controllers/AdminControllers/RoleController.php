@@ -13,7 +13,7 @@ class RoleController extends Controller
 {
     //
 
-    public function destroy(\App\Models\Role $role){
+    public function destroy(Role $role){
 
 
       $role->delete();

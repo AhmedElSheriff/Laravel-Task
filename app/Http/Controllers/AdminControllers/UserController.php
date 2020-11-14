@@ -9,6 +9,29 @@ class UserController extends Controller
 {
     //
 
+    public function store(){
+      $data = \request()->validate([
+        'name' => 'required',
+        'email' => 'required',
+        'password' => 'required',
+      ]);
+
+      $data['password'] = \Illuminate\Support\Facades\Hash::make($data['password']);
+
+
+      $user = \App\Models\User::find(\App\Models\User::create($data)->id);
+
+
+      $roles = \request('roles') ?? [];
+      foreach($roles as $role){
+
+        $user->assignRole($role);
+      }
+
+      return redirect('/admin/users');
+
+    }
+
     public function update(\App\Models\User $user){
       $data = \request()->validate([
         'name' => 'required',
@@ -39,4 +62,12 @@ class UserController extends Controller
       return redirect('/admin/users');
 
     }
+
+    public function destroy(\App\Models\User $user){
+      $user->delete();
+
+      return redirect('/admin/users');
+    }
+
+
 }

@@ -51,6 +51,13 @@ class AdminController extends Controller
       ]);
     }
 
+    public function createUser(){
+      $roles = Role::all();
+      return view('admin.users.create', [
+        'roles' => $roles,
+      ]);
+    }
+
     public function editUser(\App\Models\User $user){
 
       $roles = Role::all();
