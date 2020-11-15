@@ -32,7 +32,7 @@ document.getElementById("admin-posts-tab").classList.add('active');
             @if(!$post->approved)
             <a href="/admin/posts/{{$post->id}}/approve" class="btn btn-primary mr-1">Approve</a>
             @endif
-            <a href="" class="btn btn-secondary mr-1">Edit</a>
+            <a href="/admin/posts/{{$post->id}}/edit" class="btn btn-secondary mr-1">Edit</a>
             <form method="POST" action="/admin/posts/{{$post->id}}">
               @csrf
               @method('DELETE')

@@ -13,20 +13,34 @@ class PermissionController extends Controller
 {
     //
 
-    public function destroy(\App\Models\Role $role){
+    public function destroy(Permission $permission){
 
 
-      $role->delete();
+      $permission->delete();
 
-      return redirect('/admin/roles');
+      return redirect('/admin/permissions');
     }
 
-    public function store(){
+    public function update(Permission $permission){
+
       $data = \request()->validate([
-        'permission_name' => 'required'
+        'name' => 'required'
       ]);
 
-      $permission = Permission::create(['name' => strtolower($data['permission_name'])]);
+      $permission->update($data);
+
+      return redirect('/admin/permissions');
+    }
+
+
+    public function store(){
+
+      $data = \request()->validate([
+        'name' => 'required'
+      ]);
+
+
+      $permission = Permission::create(['name' => strtolower($data['name'])]);
 
       return redirect('admin/permissions');
 

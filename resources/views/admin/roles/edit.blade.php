@@ -1,9 +1,9 @@
 @extends('admin.layouts.admin')
 @section('content')
 
-<!-- <script>
+<script>
 document.getElementById("admin-roles-tab").classList.add('active');
-</script> -->
+</script>
 
 
 <section class="content">
@@ -15,11 +15,11 @@ document.getElementById("admin-roles-tab").classList.add('active');
         @method('PATCH')
         <div class="form-group row">
             <div class="col-8 offset-2">
-                <label for="role_name" class="col-md-4 col-form-label">{{ __('Role Name') }}</label>
+                <label for="name" class="col-md-4 col-form-label">{{ __('Role Name') }}</label>
 
-                <input id="role_name" type="text" class="form-control{{ $errors->has('role_name') ? ' is-invalid' : '' }}" name="role_name" value="{{ old('role_name') ?? $role->name ?? ''}}" autocomplete="role_name" autofocus>
+                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') ?? $role->name ?? ''}}" autocomplete="name" autofocus>
 
-                @error('role_name')
+                @error('name')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>

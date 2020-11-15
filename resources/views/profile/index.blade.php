@@ -76,7 +76,63 @@
 
                 <div class="card-body">
 
-                    {{ $post->message }}
+                  <div class="row" id="post-container">
+                    <div class="col-md-12">
+                      {{ $post->message }}
+                    </div>
+
+
+                    <!-- Comments -->
+
+                    @foreach($post->comments as $comment)
+                    <!-- Start Comments Layout -->
+                    <div class="col-md-12 pt-4 pb-4">
+                      <div class="card">
+
+
+                          <div class="card-body">
+
+                            <div class="d-flex align-items-center">
+                              <img src="{{$user->profile->profileImage()}}" class="w-100 rounded-circle " style="max-width: 50px;">
+
+                                  <div class="font-weight-bold">
+                                      <a href="#"><span class="text-dark">{{$comment->user->name}}</span></a>
+                                  </div>
+                            </div>
+
+                            <hr>
+
+
+                            {{ $comment->comment }}
+                          </div>
+
+                      </div>
+                    </div>
+
+                    <!-- End Comments Layout -->
+                    @endforeach
+                    </div>
+                    <div class="d-flex pt-4">
+                      <!-- Start Comments Input -->
+                    <div class="col-md-10">
+                      <input id="comment-input" type="text" style="width: 100%">
+                    </div>
+
+                    <div class="col-md-2">
+                      <!-- <form action="/comments/{{$user->id}}" method="post">
+                        @csrf
+                        @method('PATCH')
+
+                        <button href="" onclick="return confirm('Are you sure?')" class="btn btn-secondary mr-1 ">Send</button>
+                      </form> -->
+                      <send-comment post-id="{{$post->id}}" ></send-comment>
+                    </div>
+                    <!-- End Comments Input -->
+
+                    <span id="test-span"></span>
+
+                  </div>
+
                 </div>
             </div>
         </div>

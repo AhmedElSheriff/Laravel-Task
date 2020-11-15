@@ -50,8 +50,6 @@
       </li>
     </ul>
 
-  
-
 
   </nav>
   <!-- /.navbar -->
@@ -59,7 +57,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="/profile/{{auth()->user()->id}}" class="brand-link">
       <img src="{{asset('dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">Laravel Admin</span>
@@ -73,7 +71,7 @@
           <img src="{{auth()->user()->profile->profileImage()}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{auth()->user()->name}}</a>
+          <a href="/profile/{{auth()->user()->id}}" class="d-block">{{auth()->user()->name}}</a>
         </div>
       </div>
 
@@ -91,6 +89,12 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/admin" class="nav-link" id="admin-dashboard-tab">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="/admin/users" class="nav-link" id="admin-users-tab">
                   <i class="far fa-circle nav-icon"></i>

@@ -1,5 +1,6 @@
 $(document).ready(function() {
   //  $('.test').select2();
+
 });
 
 // $('.test').select2({

@@ -14,12 +14,18 @@ class AdminController extends Controller
 
     public function index(){
 
-      return view('admin/index');
+      $users = \App\Models\User::all();
+      $posts = \App\Models\Post::all();
+      $roles = Role::all();
+      $permissions = Permission::all();
+
+
+      return view('admin/index', compact('users', 'posts', 'roles', 'permissions'));
 
     }
 
     public function users(){
-      $users = \App\Models\User::all();
+      $users = \App\Models\User::orderBy('id', 'DESC')->get();
 
 
       return view('admin.users.users', [
@@ -28,28 +34,31 @@ class AdminController extends Controller
 
     }
 
+    public function posts(){
+      $posts = \App\Models\Post::orderBy('id', 'DESC')->get();
+
+      return view('admin.posts.posts', [
+        'posts' => $posts,
+      ]);
+    }
+
+
     public function roles(){
 
-      $roles = Role::all();
+      $roles = Role::orderBy('id', 'DESC')->get();
 
       return view('admin.roles.roles', [
         'roles' => $roles,
       ]);
     }
 
-    public function createRole(){
-      return view('admin.roles.create');
-    }
-
-    public function editRole($roleID){
-      $role = Role::find($roleID);
-      $permissions = Permission::all();
-
-      return view('admin.roles.edit', [
-        'role' => $role,
+    public function permissions(){
+      $permissions = Permission::orderBy('id', 'DESC')->get();
+      return view('admin.permissions.permissions',[
         'permissions' => $permissions,
       ]);
     }
+
 
     public function createUser(){
       $roles = Role::all();
@@ -69,10 +78,24 @@ class AdminController extends Controller
       ]);
     }
 
+    public function editPost(\App\Models\Post $post){
+      return view('admin.posts.edit', [
+        'post' => $post,
+      ]);
+    }
 
-    public function permissions(){
+
+
+    public function createRole(){
+      return view('admin.roles.create');
+    }
+
+    public function editRole($roleID){
+      $role = Role::find($roleID);
       $permissions = Permission::all();
-      return view('admin.permissions.permissions',[
+
+      return view('admin.roles.edit', [
+        'role' => $role,
         'permissions' => $permissions,
       ]);
     }
@@ -81,18 +104,13 @@ class AdminController extends Controller
       return view('admin.permissions.create');
     }
 
+    public function editPermission(Permission $permission){
 
-    public function posts(){
-      $posts = \App\Models\Post::all();
-
-      return view('admin.posts.posts', [
-        'posts' => $posts,
+      return view('admin.permissions.edit', [
+        'permission' => $permission,
       ]);
+
     }
 
-    public function approvePost(\App\Models\Post $post){
-      $post->update(['approved' => 1]);
 
-      return redirect('/admin/posts');
-    }
 }

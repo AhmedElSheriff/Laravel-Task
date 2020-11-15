@@ -33,6 +33,7 @@ class UserController extends Controller
     }
 
     public function update(\App\Models\User $user){
+
       $data = \request()->validate([
         'name' => 'required',
         'email' => 'required',
@@ -58,6 +59,8 @@ class UserController extends Controller
 
         }
       }
+
+      $user->update($data);
 
       return redirect('/admin/users');
 

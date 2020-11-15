@@ -1,9 +1,9 @@
 @extends('admin.layouts.admin')
 @section('content')
 
-<!-- <script>
+<script>
 document.getElementById("admin-roles-tab").classList.add('active');
-</script> -->
+</script>
 
 
 <section class="content">

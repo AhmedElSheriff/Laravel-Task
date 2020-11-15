@@ -13,6 +13,7 @@ class RoleController extends Controller
 {
     //
 
+
     public function destroy(Role $role){
 
 
@@ -23,10 +24,10 @@ class RoleController extends Controller
 
     public function store(){
       $data = \request()->validate([
-        'role_name' => 'required'
+        'name' => 'required'
       ]);
 
-      $role = Role::create(['name' => strtolower($data['role_name'])]);
+      $role = Role::create(['name' => strtolower($data['name'])]);
 
       return redirect('admin/roles');
 
@@ -35,6 +36,9 @@ class RoleController extends Controller
 
     public function update(Role $role){
 
+      $roleInfo = \request()->validate([
+        'name' => 'required',
+      ]);
 
       $data = \request('permissions') ?? [];
 
@@ -55,6 +59,8 @@ class RoleController extends Controller
           $role->revokePermissionTo($rolePermission['name']);
         }
       }
+
+      $role->update($roleInfo);
 
       return redirect('/admin/roles');
 
