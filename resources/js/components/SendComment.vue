@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button class="btn btn-secondary" @click="followUser">Send</button>
+        <button class="btn btn-secondary" @keyup.enter="sendComment" @click="sendComment">Send</button>
     </div>
 </template>
 
@@ -9,7 +9,7 @@
         props: ['postId'],
 
         mounted() {
-            console.log('Component mounted.')
+            //console.log('Component mounted.')
         },
 
         data: function (){
@@ -20,7 +20,7 @@
         },
 
         methods: {
-            followUser(){
+            sendComment(){
 
             var comment = $('#comment-input').val();
 
@@ -28,8 +28,6 @@
 
             axios.post('/posts/' + this.postId + '/comments/' + comment)
                 .then(response => {
-
-                console.log(response.data.username);
 
 
                 var post_container = $('#post-container').append(
@@ -43,7 +41,7 @@
                 })
                 .catch(errors =>{
                     if(errors) {
-                        //window.location = '/login'
+                        window.location = '/login'
                     }
                 });
 

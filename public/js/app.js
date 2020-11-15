@@ -1916,22 +1916,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['postId'],
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  mounted: function mounted() {//console.log('Component mounted.')
   },
   data: function data() {
     return {};
   },
   methods: {
-    followUser: function followUser() {
+    sendComment: function sendComment() {
       var comment = $('#comment-input').val();
 
       if (comment) {
         axios.post('/posts/' + this.postId + '/comments/' + comment).then(function (response) {
-          console.log(response.data.username);
           var post_container = $('#post-container').append("<div class='col-md-12 pt-4 pb-4'> <div class='card'> <div class='card-body'> <div class='d-flex align-items-center'> <img src='https://vistapointe.net/images/portrait-1.jpg' class='w-100 rounded-circle' style='max-width: 50px;'> <div class='font-weight-bold'> <a href='#'><span class='text-dark'>" + response.data.username + "</span></a> </div> </div> <hr>" + response.data.comment + "</div> </div> </div>");
         })["catch"](function (errors) {
-          if (errors) {//window.location = '/login'
+          if (errors) {
+            window.location = '/login';
           }
         });
       }
@@ -37535,7 +37534,21 @@ var render = function() {
   return _c("div", [
     _c(
       "button",
-      { staticClass: "btn btn-secondary", on: { click: _vm.followUser } },
+      {
+        staticClass: "btn btn-secondary",
+        on: {
+          keyup: function($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            return _vm.sendComment($event)
+          },
+          click: _vm.sendComment
+        }
+      },
       [_vm._v("Send")]
     )
   ])
