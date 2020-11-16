@@ -13,6 +13,12 @@ class PostController extends Controller
   }
 
 
+    public function index(\App\Models\Post $post){
+
+      $user = \App\Models\User::find($post->user->id);
+      return view('post.show', compact('post', 'user'));
+    }
+
     public function create(){
       return view('post.create');
     }
@@ -28,6 +34,7 @@ class PostController extends Controller
 
       return redirect('/profile/' . auth()->user()->id);
     }
+    
 
     public function destroy(\App\Models\Post $post){
       $post->delete();

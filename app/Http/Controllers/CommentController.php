@@ -22,12 +22,21 @@ class CommentController extends Controller
       $commentObj = \App\Models\Comment::find($commentID);
 
 
-      $userName = ['username' => $user->name];
+      $userName = ['username' => $user->name, 'userimage' => $user->profile->profileImage()];
       $userComment = ['comment' => $commentObj[0]->comment];
 
-      $mergedObj =  (array) $userName + $userComment;
-  
 
-      echo json_encode($mergedObj);
+      $mergedObj =  (array) $userName + $userComment;
+
+
+
+       echo json_encode($mergedObj);
     }
+
+    public function destroy(\App\Models\Comment $comment){
+      $comment->delete();
+
+      return redirect('/admin/comments');
+    }
+
 }

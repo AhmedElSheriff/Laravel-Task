@@ -42,6 +42,15 @@ class AdminController extends Controller
       ]);
     }
 
+    public function comments(){
+      $comments = \App\Models\Comment::orderBy('id', 'DESC')->get();
+
+      return view('admin.comments.comments', [
+        'comments' => $comments,
+      ]);
+    }
+
+
 
     public function roles(){
 

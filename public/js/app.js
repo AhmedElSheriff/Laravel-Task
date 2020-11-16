@@ -1914,6 +1914,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['postId'],
   mounted: function mounted() {//console.log('Component mounted.')
@@ -1923,11 +1924,21 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     sendComment: function sendComment() {
-      var comment = $('#comment-input').val();
+      var _this = this;
+
+      var comment = $(document.activeElement).val();
+      var commentInput = $(document.activeElement);
 
       if (comment) {
         axios.post('/posts/' + this.postId + '/comments/' + comment).then(function (response) {
-          var post_container = $('#post-container').append("<div class='col-md-12 pt-4 pb-4'> <div class='card'> <div class='card-body'> <div class='d-flex align-items-center'> <img src='https://vistapointe.net/images/portrait-1.jpg' class='w-100 rounded-circle' style='max-width: 50px;'> <div class='font-weight-bold'> <a href='#'><span class='text-dark'>" + response.data.username + "</span></a> </div> </div> <hr>" + response.data.comment + "</div> </div> </div>");
+          //    var post_container = $("#" + this.postId).append(
+          //    "<div class='col-md-12 pt-4 pb-4'> <div class='card'> <div class='card-body'> <div class='d-flex align-items-center'> <div class='pr-3'> <img src='" + response.data.userimage + "'   class='w-100 rounded-circle' style='max-width: 50px;'> </div> <div class='font-weight-bold'> <a href='#'><span class='text-dark'>" + response.data.username + "</span></a> </div> </div> <hr>" + response.data.comment + "</div> </div> </div>"
+          //    );
+          var post_container = $("#" + _this.postId).append("<div role='alert' class='alert alert-info w-100 text-center mt-4'>Your comment is pending and waiting for approval</div>");
+          commentInput.blur();
+          commentInput.val(function () {
+            $(this).val = '';
+          });
         })["catch"](function (errors) {
           if (errors) {
             window.location = '/login';
@@ -37532,25 +37543,22 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-secondary",
-        on: {
-          keyup: function($event) {
-            if (
-              !$event.type.indexOf("key") &&
-              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-            ) {
-              return null
-            }
-            return _vm.sendComment($event)
-          },
-          click: _vm.sendComment
+    _c("input", {
+      staticClass: "comment-input",
+      staticStyle: { width: "100%" },
+      attrs: { type: "text", placeholder: "Write a comment" },
+      on: {
+        keyup: function($event) {
+          if (
+            !$event.type.indexOf("key") &&
+            _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+          ) {
+            return null
+          }
+          return _vm.sendComment($event)
         }
-      },
-      [_vm._v("Send")]
-    )
+      }
+    })
   ])
 }
 var staticRenderFns = []

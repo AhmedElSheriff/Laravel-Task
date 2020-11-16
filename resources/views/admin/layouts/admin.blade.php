@@ -101,10 +101,18 @@
                   <p>Users</p>
                 </a>
               </li>
+
               <li class="nav-item">
                 <a href="/admin/posts/" class="nav-link" id="admin-posts-tab">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Posts</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="/admin/comments" class="nav-link" id="admin-comments-tab">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Comments</p>
                 </a>
               </li>
 
@@ -121,6 +129,8 @@
                   <p>Permissions</p>
                 </a>
               </li>
+
+
 
             </ul>
           </li>

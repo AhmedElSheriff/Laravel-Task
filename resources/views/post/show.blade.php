@@ -49,11 +49,7 @@
 @include('flash::message')
     <div class="row pt-4">
 
-      @foreach($user->post as $post)
         <div class="col-md-12 pb-3">
-            <!-- <a href="#">
-                <img src="https://vistapointe.net/images/portrait-1.jpg" style="height: 300px;" class="w-100 pt-4">
-            </a> -->
 
             <div class="card">
                 <div class="card-header">
@@ -130,7 +126,6 @@
                 </div>
             </div>
         </div>
-        @endforeach
 
     </div>
 @endsection

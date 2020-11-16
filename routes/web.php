@@ -28,12 +28,13 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::group(['middleware' => ['role:manager']], function () {
+Route::group(['middleware' => ['role:super admin']], function () {
 
 //Admin List Views
   Route::get('/admin', [App\Http\Controllers\AdminControllers\AdminController::class, 'index']);
   Route::get('/admin/users', [App\Http\Controllers\AdminControllers\AdminController::class, 'users']);
   Route::get('/admin/posts', [App\Http\Controllers\AdminControllers\AdminController::class, 'posts']);
+  Route::get('/admin/comments', [App\Http\Controllers\AdminControllers\AdminController::class, 'comments']);
   Route::get('/admin/roles', [App\Http\Controllers\AdminControllers\AdminController::class, 'roles']);
   Route::get('/admin/permissions', [App\Http\Controllers\AdminControllers\AdminController::class, 'permissions']);
 
@@ -58,6 +59,12 @@ Route::group(['middleware' => ['role:manager']], function () {
   Route::patch('/admin/posts/{post}', [App\Http\Controllers\AdminControllers\PostController::class, 'update']);
   Route::delete('/admin/posts/{post}', [App\Http\Controllers\PostController::class, 'destroy']);
 
+//Admin Comments CRUD
+Route::delete('/admin/comments/{comment}', [App\Http\Controllers\AdminControllers\CommentController::class, 'destroy']);
+Route::get('/admin/comments/{comment}/approve', [App\Http\Controllers\AdminControllers\CommentController::class, 'approveComment']);
+
+
+
 //Admin Roles CRUD
   Route::post('/admin/roles/create', [App\Http\Controllers\AdminControllers\RoleController::class, 'store']);
   Route::patch('/admin/roles/{role}', [App\Http\Controllers\AdminControllers\RoleController::class, 'update']);
@@ -72,6 +79,8 @@ Route::group(['middleware' => ['role:manager']], function () {
 
 });
 
+
+
 //User Profile
   Route::get('/profile/{user}', [App\Http\Controllers\ProfileController::class, 'index']);
   Route::get('/profile/{user}/edit', [App\Http\Controllers\ProfileController::class, 'edit']);
@@ -79,10 +88,13 @@ Route::group(['middleware' => ['role:manager']], function () {
 
 
 //User Posts
-  Route::group(['middleware' => ['can:add posts']], function () {
+  Route::group(['middleware' => ['permission:add posts']], function () {
     Route::get('/post/create', [App\Http\Controllers\PostController::class, 'create']);
+    Route::get('/post/{post}', [App\Http\Controllers\PostController::class, 'index']);
     Route::post('/post', [App\Http\Controllers\PostController::class, 'store']);
   });
 
 //User Post Comments
-Route::post('/posts/{post}/comments/{comment}', [App\Http\Controllers\CommentController::class, 'store']);
+Route::group(['middleware' => ['permission:add comment']], function () {
+  Route::post('/posts/{post}/comments/{comment}', [App\Http\Controllers\CommentController::class, 'store']);
+});
